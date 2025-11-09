@@ -1,0 +1,55 @@
+import { AppSidebar, SiteHeader } from "@/components/layout"
+import { ChartAreaInteractive, DataTable, SectionCards } from "@/components/dashboard"
+import Overview from "./overview"
+import * as React from "react"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
+
+import data from "./data.json"
+
+export default function Page() {
+  const [view, setView] = React.useState<string>(() =>
+    typeof window !== "undefined" && window.location.hash
+      ? window.location.hash.replace("#", "")
+      : "dashboard"
+  )
+
+  React.useEffect(() => {
+    const handleHash = () => setView(window.location.hash.replace("#", "") || "dashboard")
+    window.addEventListener("hashchange", handleHash)
+    return () => window.removeEventListener("hashchange", handleHash)
+  }, [])
+
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        {view === "overview" ? (
+          <Overview />
+        ) : (
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <SectionCards />
+                <div className="px-4 lg:px-6">
+                  <ChartAreaInteractive />
+                </div>
+                <DataTable data={data} />
+              </div>
+            </div>
+          </div>
+        )}
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
