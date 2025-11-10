@@ -3,9 +3,9 @@
 import { /* Button */ } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { IconMoon, IconChartBar, IconDatabase, IconSettings, IconPlus, IconLogout, IconChevronLeft } from "@tabler/icons-react"
+import { IconMoon, IconChartBar, IconDatabase, IconSettings, IconPlus, IconLogout, IconChevronLeft, IconFileText } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
+import { Home } from "lucide-react"
 
 interface SiteHeaderProps {
   ticketId?: string;
@@ -33,17 +34,34 @@ export function SiteHeader({ ticketId = "192", ticketTitle = "All Details" }: Si
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <IconChevronLeft className="h-4 w-4" />
-              <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink className="text-muted-foreground">{ticketId} {ticketTitle}</BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+  <Breadcrumb>
+      <BreadcrumbList>
+        {/* Home */}
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            href="#"
+            className="flex items-center gap-1 text-foreground transition-colors"
+          >
+            <Home className="w-4 h-4" />
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        {/* ✅ Separator */}
+        <BreadcrumbSeparator />
+
+        {/* Ticket Title */}
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            href="#"
+            className="flex items-center gap-1 text-muted-foreground"
+            aria-current="page"
+          >
+            {ticketTitle}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
           {/* <Button
             variant="ghost"

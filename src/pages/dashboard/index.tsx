@@ -1,6 +1,8 @@
-import { AppSidebar, SiteHeader } from "@/components/layout"
-import { ChartAreaInteractive, DataTable, SectionCards } from "@/components/dashboard"
+import { SiteHeader } from "@/layouts/site-header"
+import { AppSidebar } from "@/components/ui/app-sidebar"
+import { ChartAreaInteractive, DataTable, SectionCards } from "@/components/ui"
 import Overview from "./overview"
+import CalendarPage from "./calendar"
 import * as React from "react"
 import {
   SidebarInset,
@@ -33,9 +35,20 @@ export default function Page() {
     >
       <AppSidebar variant="inset" />
       <SidebarInset>
-        <SiteHeader />
+        {/* Determine page title based on view state */}
+        {(() => {
+          let pageTitle = "Dashboard"; // Default title
+          if (view === "overview") {
+            pageTitle = "Overview";
+          } else if (view === "calender") {
+            pageTitle = "Calendar";
+          }
+          return <SiteHeader ticketTitle={pageTitle} />;
+        })()}
         {view === "overview" ? (
           <Overview />
+        ) : view === "calender" ? (
+          <CalendarPage />
         ) : (
           <div className="flex flex-1 flex-col">
             <div className="@container/main flex flex-1 flex-col gap-2">

@@ -1,4 +1,4 @@
-import Dashboard from "@/app/dashboard"
+import Dashboard from "@/pages/dashboard"
 
 function App() {
   return <Dashboard />

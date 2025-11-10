@@ -15,9 +15,12 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
+  type IconProps as TablerIconProps, // Import TablerIconProps
 } from "@tabler/icons-react"
+import type { LucideProps } from "lucide-react"; // Import LucideProps
 
-import { NavDocuments, NavMain, NavSecondary, NavUser } from "@/components/nav"
+
+import { NavDocuments, NavMain, NavSecondary, NavUser } from "@/nav"
 import {
   Sidebar,
   SidebarContent,
@@ -29,7 +32,52 @@ import {
 } from "@/components/ui/sidebar"
 import { Calendar1Icon } from "lucide-react"
 
-const data = {
+// Define a union type for supported icon components
+type IconComponent = React.FC<TablerIconProps> | React.FC<LucideProps>;
+
+// Define types for better type safety
+interface NavItem {
+  title: string;
+  url: string;
+  icon?: IconComponent; // Use the union type for icons
+  items?: { title: string; url: string; icon?: IconComponent }[]; // Use the union type for icons
+}
+
+interface NavCloudItem {
+  title: string;
+  icon?: IconComponent; // Use the union type for icons
+  isActive?: boolean;
+  url: string;
+  items?: { title: string; url: string }[];
+}
+
+interface NavSecondaryItem {
+  title: string;
+  url: string;
+  icon?: IconComponent; // Use the union type for icons
+}
+
+interface DocumentItem {
+  name: string;
+  url: string;
+  icon?: IconComponent; // Use the union type for icons
+}
+
+interface User {
+  name: string;
+  email: string;
+  avatar: string;
+}
+
+interface Data {
+  user: User;
+  navMain: NavItem[];
+  navClouds: NavCloudItem[];
+  navSecondary: NavSecondaryItem[];
+  documents: DocumentItem[];
+}
+
+const data: Data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
